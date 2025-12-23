@@ -1347,6 +1347,7 @@ class PriorGuidedRE(nn.Module):
 
         # Lấy prior ở mức thấp nhất
         prior_low = prior_levels[-1]
+        prior_fast_res = []
 
         fusion_res = []
 
@@ -1362,6 +1363,7 @@ class PriorGuidedRE(nn.Module):
             
             # Gửi chúng qua FAST_Module
             fast_output = self.fast_modules[i](current_dr, current_prior)
+            prior_fast_res.append(fast_output)
             fusion_in = torch.cat((fusion_res[-1], fast_output), dim=1)
             #fusion_in = torch.cat((fusion_res[-1], dr_res[i]), dim=1)
             fusion_res.append(self.fusion[i](fusion_in))
